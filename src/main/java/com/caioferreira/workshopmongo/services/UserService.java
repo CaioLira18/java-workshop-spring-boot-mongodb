@@ -1,12 +1,15 @@
 package com.caioferreira.workshopmongo.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.caioferreira.workshopmongo.domain.User;
 import com.caioferreira.workshopmongo.repository.UserRepository;
+
+import javassist.tools.rmi.ObjectNotFoundException;
 
 @Service
 public class UserService {
@@ -16,5 +19,10 @@ public class UserService {
 	
 	public List<User> findAll(){
 		return repo.findAll();		
+	}
+	
+	public User findById(String id) throws ObjectNotFoundException {
+		Optional<User> obj = repo.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 }
